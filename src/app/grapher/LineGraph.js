@@ -1,5 +1,5 @@
 import Dygraph from "dygraphs"
-import "../_components/dygraphs.css"
+import "./dygraphs.css"
 import { useEffect, useRef } from "react"
 export default function LineGraph(props){
     const data = props.data

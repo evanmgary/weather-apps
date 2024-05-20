@@ -1,0 +1,43 @@
+.current-bar{
+    display: flex;
+    flex-direction: column;
+}
+
+.all-temp-data{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.day-temps{
+    display: flex;
+    flex-direction: column;
+}
+
+.current-temp{
+    font-size: 50px;
+    font-weight: bolder;
+}
+
+.day-high-low{
+    font-size: 30px;
+}
+
+.other-temp-data{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.other-data{
+    text-align: right;
+}
+
+.other-label{
+    font-size: 16px;
+}
+
+.other-value{
+    font-size: 30px;
+    font-weight: bold;
+}

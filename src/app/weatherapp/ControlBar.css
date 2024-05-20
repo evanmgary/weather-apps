@@ -1,0 +1,9 @@
+.controlBar{
+    display: inline-flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.selectButton{
+    height: 30px;
+}

@@ -1,9 +1,9 @@
 'use client'
 import { useState } from "react"
-import SearchControl from "../_components/SearchControl"
+import SearchControl from "./SearchControl"
 //import LineGraph from "../_components/LineGraph"
 import dynamic from "next/dynamic"
-const LineGraph = dynamic(() => import('../_components/LineGraph.js'), {
+const LineGraph = dynamic(() => import('./LineGraph.js/index.js'), {
     ssr: false,
   })
 
