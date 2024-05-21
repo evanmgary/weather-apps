@@ -62,10 +62,11 @@ function MapComponent(props){
         const lat = props.clickedCoords.lat
         const lng = props.clickedCoords.lng
         props.setClicked({lat: lat, lng: lng})
-        const bbox = `${lng - boxSize},${lat - boxSize}, ${lng + boxSize}, ${lat + boxSize}`
+        const bbox = [lng - boxSize, lat - boxSize, lng + boxSize, lat + boxSize]
+        const request = {"elems":[{"name":"maxt","interval":"dly","duration":"dly","normal":"91","prec":2},{"name":"mint","interval":"dly","duration":"dly","normal":"91","prec":2},{"name":"avgt","interval":"dly","duration":"dly","normal":"91","prec":2}],"sDate":"2010-01-01","eDate":"2010-12-31","meta":["name","state","ll","sids"],"bbox":bbox}
         //fetch station list from acis
         const res = await fetch('https://data.rcc-acis.org/StnMeta',
-            {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({bbox: bbox})}
+            {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(request)}
         )
         const data = await res.json()
         const stations = data.meta
@@ -115,7 +116,7 @@ function MapComponent(props){
                         
                 </MapContainer>
             </div>
-            <div className="station-fetch-bar">
+            <div className="station-fetch-bar control-bar">
                 <h2 className="selected">Selected location: {Math.abs(props.clickedCoords.lat.toFixed(2))} {props.clickedCoords.lat > 0 ? "N" : "S"}, {Math.abs(props.clickedCoords.lng.toFixed(2))} {props.clickedCoords.lng > 0 ? "E" : "W"}</h2>
                 <button className="selectButton" onClick={fetchStationsAndDisplay}>Get Stations</button>
             </div>

@@ -13,7 +13,7 @@ export default function SearchControl(props){
             console.log("Invalid Station")
             return
         }
-        const res = await fetch("http://localhost:3000/api/" + station.trim())
+        const res = await fetch("/api/" + station.trim())
         //const res = await fetch("http://localhost:5000/test")
         const resJson = await res.json()
         if ("error" in resJson) {
@@ -29,7 +29,7 @@ export default function SearchControl(props){
             console.log("Invalid Station")
             return
         }
-        const res = await fetch(`http://localhost:3000/api/${station.trim()}/${year}`)
+        const res = await fetch(`/api/${station.trim()}/${year}`)
         const resJson = await res.json()
         if ("error" in resJson) {
             props.setGraph1Desc("Invalid station and/or year.")

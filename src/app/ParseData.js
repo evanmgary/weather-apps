@@ -41,6 +41,7 @@ export default function parseData(data, reverse){
             date = new Date(Date.UTC(parseInt(line[0]), parseInt(line[1]) - 1, parseInt(line[2]), parseInt(line[3])))
             startIndex = 4
         }
+        
         output["date"].push(date.toISOString())
         for (let i = startIndex; i < splitData[0].length; i++){
             let label = labels[i]

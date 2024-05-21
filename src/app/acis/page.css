@@ -2,3 +2,26 @@
   text-align: center;
   background: rgb(249, 250, 243); 
 }
+
+button{
+  border: 2px solid black;
+  border-radius: 3px;
+  background-color: lightgray;
+  padding: 2px 5px;
+}
+
+
+.control-bar{
+  margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.product-bar{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}

@@ -8,25 +8,30 @@ function ChartComponent(props){
     }
 
     const dateTicks = (item) =>{
-        const date = new Date(item)
+        const date = new Date(item + "T00:00:00")
+        console.log(date)
         const month =  date.getMonth() + 1
-        const day = date.getDay()
+        const day = date.getDate()
 
         return `${month}/${day}`
     }
 
     function customTooltip({active, payload, label}){
+        
         if (active && payload && payload.length){
-            <div className="custom-tooltip">
-                {Object.keys(payload).map((key) => {
-                    key.contains("record") ? <p className='tooltip-data'>{`${key}: ${payload.key}${props.unit} (${payload[key + "_year"]})`}</p> : <p className='tooltip-data'>{`${key}: ${payload.key}${props.unit}`}</p> 
+            const payloadObj = payload[0].payload
+            console.log(payloadObj)
+            return(
+            <div className="custom-tooltip" style={{border: "2px solid black", height: "70px", width: "90px"}}>
+                {Object.keys(payloadObj).map((key) => {
+                    key.includes("record") ? <p className='tooltip-data'>{`${key}: ${payloadObj[key]}${props.unit} (${payloadObj[key + "_year"]})`}</p> : <p className='tooltip-data'>{`${key}: ${payloadObj[key]}${props.unit}`}</p> 
                 })}
-            </div>
+            </div>)
         }
+        return null
     }
+    // <Tooltip formatter={(value, name) => [`${value}${props.unit}`, name.replace("_", " ")]} labelFormatter={dateTicks}/>
 
-
-    
     return(
         <div className="chartComponent">
             <ResponsiveContainer width="100%" height="100%">
@@ -37,13 +42,13 @@ function ChartComponent(props){
                 >
                     <CartesianGrid strokeDasharray="3 3"/>
                     <XAxis dataKey="date" tickFormatter={dateTicks}/>
-                    <YAxis domain={props.unit === "°" ? ([dataMin, dataMax]) => [(Math.floor((dataMin - 10) / 10)) * 10, (Math.floor((dataMax + 10) / 10)) * 10] : [0, 100]} unit={props.unit} allowDecimals={false}/>
+                    <YAxis domain={([dataMin, dataMax]) => [(Math.floor((dataMin - 10) / 10)) * 10, (Math.floor((dataMax + 10) / 10)) * 10]} unit={props.unit} allowDecimals={false}/>
                     <Tooltip formatter={(value, name) => [`${value}${props.unit}`, name.replace("_", " ")]} labelFormatter={dateTicks}/>
                     <Legend formatter={(value) => value.replace("_", " ")} />
                     {
                         props.variables.map(item => {
                             return(
-                                    <Line key="" type="monotone" dataKey={item} stroke={colors[item]} activeDot={{r: 5}} dot={false} />
+                                    <Line key="" type={item.includes("record") ? "step" :"monotone"} dataKey={item} stroke={colors[item]} strokeWidth={item.includes("record") ? 0 : 2} activeDot={{r: 5}} dot={item.includes("record") ? {stroke: colors[item], strokeWidth: 3} : false}/>
                             )
                         })
                     }
