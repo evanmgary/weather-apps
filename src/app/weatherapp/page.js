@@ -49,13 +49,13 @@ export default function Page() {
       if (precip25 == null && weatherData.hourly.precipitation_probability[index] >= 25){
         const time = new Date(weatherData.hourly.time[index])
         const hour = time.getHours()
-        precip25 = `${time.getMonth()}/${time.getDate()} at ${hour < 12 ? (hour === 0 ? 12 : hour) + "AM" : (hour === 12 ? 12 : hour - 12) + "PM"}`
+        precip25 = `${time.getMonth() + 1}/${time.getDate()} at ${hour < 12 ? (hour === 0 ? 12 : hour) + "AM" : (hour === 12 ? 12 : hour - 12) + "PM"}`
       }
 
       if (precip75 == null && weatherData.hourly.precipitation_probability[index] >= 75){
         const time = new Date(weatherData.hourly.time[index])
         const hour = time.getHours()
-        precip75 = `${time.getMonth()}/${time.getDate()} at ${hour < 12 ? (hour === 0 ? 12 : hour) + "AM" : (hour === 12 ? 12 : hour - 12) + "PM"}`
+        precip75 = `${time.getMonth() + 1}/${time.getDate()} at ${hour < 12 ? (hour === 0 ? 12 : hour) + "AM" : (hour === 12 ? 12 : hour - 12) + "PM"}`
       }
       if (precip25 != null && precip75 != null){
         break

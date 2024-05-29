@@ -10,7 +10,7 @@ function ChartComponent(props){
     const timeTicks = (item) =>{
         const time = new Date(item)
         const hour = time.getHours()
-        return `${time.getMonth()}/${time.getDate()} ${hour < 12 ? (hour === 0 ? 12 : hour) + "AM" : (hour === 12 ? 12 : hour - 12) + "PM"}`
+        return `${time.getMonth() + 1}/${time.getDate()} ${hour < 12 ? (hour === 0 ? 12 : hour) + "AM" : (hour === 12 ? 12 : hour - 12) + "PM"}`
     } 
 
 
