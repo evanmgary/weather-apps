@@ -2,9 +2,7 @@ import React, { useState, useRef } from "react";
 import L from 'leaflet'
 import "leaflet/dist/leaflet.css" 
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet"
-import markerIcon from "/public/images/marker-icon.png"
-import markerShadow from "/public/images/marker-shadow.png"
-import markerRetina from "/public/images/marker-icon-2x.png"
+import { isMobile } from "react-device-detect"
 import "./MapComponent.css"
 
 function MapComponent(props){
@@ -17,8 +15,8 @@ function MapComponent(props){
 
     async function searchHandler(){
         const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${locSearch}&count=10&language=en&format=json`)
-        const data = await res.json()
-        setLocData(data["results"])
+        const data = await res.json() 
+        setLocData(data["results"] ? data["results"] : [])
         setLocVisible(true)
     }
 
@@ -39,6 +37,18 @@ function MapComponent(props){
         setLocVisible(false)
     }
 
+    function locateUser(){
+        const map = mapRef.current
+        map.locate({setView: true})
+            .on('locationfound', (e) => {
+                clickLocation(e.latlng.lat, e.latlng.lng)
+            })
+            .on('locationerror', (e) => {
+                console.log("Cannot locate user. Permission may have been denied.")
+            })
+
+    }
+
     const ClickHandler = ({onClick}) => {
         const map = useMapEvents({
             click: (e) => {
@@ -56,23 +66,25 @@ function MapComponent(props){
     return(
         <div className="map-component-frame">
             <div className="location-search">
-                    <input type="text" className="location-search-bar" placeholder="Search location.." onChange={(e) => {setLocSearch(e.target.value)}} onKeyDown={enterHandler}></input>
-                    <button className="location-search-button" onClick={searchHandler}>Search</button>
-                    <div className="location-picker" style={{"visibility": locVisible ? "visible" : "hidden"}}>
-                        {
-                            locData.map((item, index) => {
-                                const loc = item.name
-                                const country = item.country_code
-                                const lat = item.latitude
-                                const lng = item.longitude
-                                const locString = `${loc}, ${item.admin1}, ${country} (${lat}, ${lng})`
-                                return <div key={"loc" + index} className="location-item" onClick={() => clickLocation(lat, lng)}>{locString} </div>
-                            })
-                        }
-                    </div>
+                <button className="locate-button" onClick={locateUser}>Locate</button>
+                <div style={{width: "20px"}}></div>
+                <input type="text" className="location-search-bar" placeholder="Search location.." onChange={(e) => {setLocSearch(e.target.value)}} onKeyDown={enterHandler}></input>
+                <button className="location-search-button" onClick={searchHandler}>Search</button>
+                <div className="location-picker" style={{"visibility": locVisible ? "visible" : "hidden"}}>
+                    {
+                        locData.map((item, index) => {
+                            const loc = item.name
+                            const country = item.country_code
+                            const lat = item.latitude
+                            const lng = item.longitude
+                            const locString = `${loc}, ${item.admin1}, ${country} (${lat}, ${lng})`
+                            return <div key={"loc" + index} className="location-item" onClick={() => clickLocation(lat, lng)}>{locString} </div>
+                        })
+                    }
                 </div>
+            </div>
             <div className="map-frame">
-                <MapContainer ref={mapRef} center={center} zoom={10} minZoom={3} worldCopyJump={true} style={{height: "700px", width: "1fr"}}>
+                <MapContainer ref={mapRef} center={center} zoom={10} minZoom={3} worldCopyJump={true} style={{height: isMobile ? "450px" : "700px", width: "1fr"}}>
                 
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

@@ -3,6 +3,9 @@
 }
 
 .location-search{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
     position: relative;
     width: 400px;
     margin: 20px auto;
@@ -17,13 +20,13 @@
 
 .location-search-bar{
     border: 2px solid black;
-    width: 300px;
+    width: 400px;
     
 }
 
 .location-picker{
     position: absolute;
-    top: 20px;
+    top: 36px;
     z-index: 500;
     border: 1px solid black;
     background-color: white;

@@ -41,7 +41,7 @@ function ChartComponent(props){
                     data={props.data}
                 >
                     <CartesianGrid strokeDasharray="3 3"/>
-                    <XAxis dataKey="date" tickFormatter={dateTicks}/>
+                    <XAxis dataKey="date" tickFormatter={dateTicks} angle={-70} tickMargin={32} height={90}/>
                     <YAxis domain={([dataMin, dataMax]) => [(Math.floor((dataMin - 10) / 10)) * 10, (Math.floor((dataMax + 10) / 10)) * 10]} unit={props.unit} allowDecimals={false}/>
                     <Tooltip formatter={(value, name) => [`${value}${props.unit}`, name.replace("_", " ")]} labelFormatter={dateTicks}/>
                     <Legend formatter={(value) => value.replace("_", " ")} />

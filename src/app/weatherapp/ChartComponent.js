@@ -1,6 +1,8 @@
 import React from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import "./ChartComponent.css"
+import { isMobile } from "react-device-detect"
+
 
 function ChartComponent(props){
     const colors = {
@@ -24,7 +26,7 @@ function ChartComponent(props){
                     data={props.data}
                 >
                     <CartesianGrid strokeDasharray="3 3"/>
-                    <XAxis dataKey="time" tickFormatter={timeTicks} tickCount={6} interval={11}/>
+                    <XAxis dataKey="time" tickFormatter={timeTicks} tickCount={6} interval={isMobile ? 23: 11} angle={-70} tickMargin={32} height={90}/>
                     <YAxis domain={props.unit === "°" ? ([dataMin, dataMax]) => [(Math.floor((dataMin - 10) / 10)) * 10, (Math.floor((dataMax + 10) / 10)) * 10] : [0, 100]} unit={props.unit} allowDecimals={false}/>
                     <Tooltip formatter={(value, name) => [`${value}${props.unit}`, name.replace("_2m", "").replace("_", " ")]} labelFormatter={timeTicks}/>
                     <Legend formatter={(value) => value.replace("_2m", "").replace("_", " ")} />
