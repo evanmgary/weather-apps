@@ -82,7 +82,7 @@ export default function Page() {
   
   return (
     <div className="App">
-      <h1>Temperature data</h1>
+      <h1 className='page-title'>Weather Forecast</h1>
       <MapComponent setClicked={setClickedCoords} coords={clickedCoords}/>
       <ControlBar clickedCoords={clickedCoords} setWeatherData={setWeatherData} wetBulb={wetBulb} tempUnit={tempUnit} setTempUnit={setTempUnit}/>
       {Object.keys(weatherData).length !== 0 ? <CurrentBar current={currentWeather}/>: null}

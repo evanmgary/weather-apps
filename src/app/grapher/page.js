@@ -13,7 +13,7 @@ export default function Page(){
     const [graph1Desc, setGraph1Desc] = useState("Please enter a station above.")
     return(
         <div>
-            <h1 className="text-center font-bold text-lg mb-12">Buoy Grapher</h1>
+            <h1 className="page-title">Buoy Grapher</h1>
             <SearchControl setData={setData} setGraph1Desc={setGraph1Desc}/>
             <LineGraph data={data} fields={["ATMP", "WTMP", "DEWP"]} graph1Desc={graph1Desc} rollPeriod={0}/>
             <LineGraph data={data} fields={["WSPD", "GST"]} graph1Desc={""} rollPeriod={60}/>

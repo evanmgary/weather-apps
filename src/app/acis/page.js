@@ -102,6 +102,7 @@ export default function Page(){
     
     return(
     <div className="page">
+        <h1 className="page-title">ACIS Grapher</h1>
         <div className="map-component">
             <MapComponent setClicked={setClickedCoords} clickedCoords={clickedCoords} setStation={setStation} setStationList={setStationList} stationList={stationList}/>
         </div>
