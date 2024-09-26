@@ -20,7 +20,7 @@ export default function Page(){
     const [data1, setData1] = useState({})
     const [data2, setData2] = useState({})
     const [data3, setData3] = useState({})
-    const [year, setYear] = useState(2023)
+    const [year, setYear] = useState(2024)
 
     async function callApi(){
         if (mode === "record"){

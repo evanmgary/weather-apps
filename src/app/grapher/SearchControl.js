@@ -1,54 +1,54 @@
 'use client'
-import { useState } from "react"
+import { useRef } from "react"
 import stations from "../_data/allstations.json"
 export default function SearchControl(props){
     
-    //const [station, setStation] = useMemo(null)
+    const station = useRef("NWCL1")
     //const [year, setYear] = useState(2023)
     //const [stationInput, setStationInput] = useState("")
-    let year = 2023
-    let station = "NWCL1"
+    let year = useRef(2023)
+    //let station = "NWCL1"
     async function recentHandler(){
-        if (!stations.includes(station.trim())){
+        if (!stations.includes(station.current.trim())){
             console.log("Invalid Station")
             return
         }
-        const res = await fetch("/api/" + station.trim())
+        const res = await fetch("/api/" + station.current.trim())
         //const res = await fetch("http://localhost:5000/test")
         const resJson = await res.json()
         if ("error" in resJson) {
             props.setGraph1Desc("Invalid station and/or year.")
             return
         }
-        props.setGraph1Desc(`Displaying recent 45 days for station ${station}`)
+        props.setGraph1Desc(`Displaying recent 45 days for station ${station.current}`)
         props.setData(resJson)
     }
 
     async function historicHandler(){
-        if (!stations.includes(station.trim())){
+        if (!stations.includes(station.current.trim())){
             console.log("Invalid Station")
             return
         }
-        const res = await fetch(`/api/${station.trim()}/${year}`)
+        const res = await fetch(`/api/${station.current.trim()}/${year.current}`)
         const resJson = await res.json()
         if ("error" in resJson) {
             props.setGraph1Desc("Invalid station and/or year.")
             return
         }
      
-        props.setGraph1Desc(`Displaying station ${station} for year ${year}`)
+        props.setGraph1Desc(`Displaying station ${station.current} for year ${year.current}`)
         props.setData(resJson)
     }
 
     function yearHandler(e){
-        year = e.target.value
+        year.current = e.target.value
     }
 
     function stationHandler(e){
        // setStationInput(e.target.value)
         
-        station = e.target.value
-        console.log(station)
+        station.current = e.target.value
+        console.log(station.current)
     }
     
     return(
