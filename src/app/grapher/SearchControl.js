@@ -13,7 +13,7 @@ export default function SearchControl(props){
             console.log("Invalid Station")
             return
         }
-        const res = await fetch("/api/" + station.current.trim())
+        const res = await fetch("/api/" + station.current.trim(), {next: {revalidate: 86400}})
         //const res = await fetch("http://localhost:5000/test")
         const resJson = await res.json()
         if ("error" in resJson) {
